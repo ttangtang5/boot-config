@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="mybatis" targetRuntime="Mybatis3">
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/gy_glory"
+                        userId="root" password="root">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.example.generatordemo.pojo" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.example.generatordemo.mapper"
+                         targetProject="./src/main/resources/mapper">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="MIXEDMAPPER"
+                             targetPackage="com.example.generatordemo.mapper"
+                             targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="product" domainObjectName="Coffee">
+            <generatedKey column="id" sqlStatement="CALL IDENTITY()" identity="true"></generatedKey>
+            <columnOverride column="price" property="money" javaType="org.joda.money.Money" jdbcType="BIGINT"
+                            typeHandler="com.example.generatordemo.handler.MoneyTypeHandler"></columnOverride>
+        </table>
+    </context>
+</generatorConfiguration>
